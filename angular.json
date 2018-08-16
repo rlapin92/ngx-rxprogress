@@ -121,6 +121,46 @@
           }
         }
       }
+    },
+    "ngx-rxprogress": {
+      "root": "projects/ngx-rxprogress",
+      "sourceRoot": "projects/ngx-rxprogress/src",
+      "projectType": "library",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-rxprogress/tsconfig.lib.json",
+            "project": "projects/ngx-rxprogress/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/ngx-rxprogress/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-rxprogress/src/test.ts",
+            "tsConfig": "projects/ngx-rxprogress/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-rxprogress/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-rxprogress/tsconfig.lib.json",
+              "projects/ngx-rxprogress/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "progress-lib"

@@ -16,6 +16,14 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngx-rxprogress": [
+        "dist/ngx-rxprogress"
+      ],
+      "ngx-rxprogress/*": [
+        "dist/ngx-rxprogress/*"
+      ]
+    }
   }
 }
