@@ -1,33 +1,45 @@
-import {ComponentFactoryResolver, Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
+import {
+  ComponentFactory,
+  ComponentFactoryResolver, ComponentRef, Directive, Input, OnDestroy, OnInit, TemplateRef,
+  ViewContainerRef
+} from '@angular/core';
+import {Subscription} from 'rxjs/index';
 import {ProgressRegistryService} from '../service/progress-registry.service';
-import {map, scan} from 'rxjs/operators';
-import {Subscription} from 'rxjs';
-import {ProgressComponent} from '../component/progress/progress.component';
 import {ProgressConfig} from '../model/progress-config';
+import {ProgressComponent} from '../component/progress/progress.component';
 
 @Directive({
   selector: '[ngxProgress]'
 })
 export class ProgressDirective implements OnInit, OnDestroy {
+
   @Input('ngxProgress') config: ProgressConfig;
   private subscription: Subscription;
+  private progress: ComponentFactory<ProgressComponent>;
 
-  private prevVisible = false;
 
   private set visible(visible: boolean) {
     this.container.clear();
-    if (visible) {
-      if (this.config.progressTemplate) {
-        this.container.createEmbeddedView(this.config.progressTemplate);
-      } else {
-        this.container.createComponent(this.componentFactory.resolveComponentFactory(ProgressComponent));
+
+    if (!this.config.replace) {
+      if (visible) {
+        this.container.createEmbeddedView(this.template);
       }
     } else {
-      this.container.createEmbeddedView(this.template);
+      if (!visible) {
+        this.container.createEmbeddedView(this.template);
+      } else {
+        if (this.config.progressTemplate) {
+          this.container.createEmbeddedView(this.config.progressTemplate);
+        } else {
+          debugger;
+          const componentRef = this.container.createComponent(this.progress);
+          componentRef.instance.width = this.config.style.width;
+          componentRef.instance.height = this.config.style.height;
+        }
+      }
     }
-    this.prevVisible = visible;
   }
-
 
   constructor(private container: ViewContainerRef,
               private template: TemplateRef<any>,
@@ -36,11 +48,13 @@ export class ProgressDirective implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription = this.progressRegistry.progressUpdate$(this.config.id).pipe(
-      map(s => s.status),
-      scan((acc, cur) => acc + cur, 0)).subscribe((status) => {
-      this.visible = status > 0;
-    });
+    this.visible = false;
+    if (this.config) {
+      this.progress = this.componentFactory.resolveComponentFactory(ProgressComponent);
+      this.subscription = this.progressRegistry.progressUpdate$(this.config.id).subscribe((status) => {
+        this.visible = status > 0;
+      });
+    }
   }
 
   ngOnDestroy(): void {
@@ -48,5 +62,4 @@ export class ProgressDirective implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
-
 }

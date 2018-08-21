@@ -1,10 +1,44 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
+<header>
+  NGX-RXPROGRESS SANDBOX
+</header>
+<div class="content">
+  <div class="container">
+    <div class="header" (click)="startTimer()">
+      Use any component as a progress bar(Press me)
+    </div>
+    <div class="row2x1">
+      <ngx-progress class="progress" *ngxProgress="{id:'timer1'}"></ngx-progress>
+    </div>
+  </div>
+  <div class="container">
+    <div class="header" (click)="startTimer2()">
+      Replace some component with the default progressbar (Press me)
+    </div>
+    <div class="row2x1">
+      <div class="test-container"
+           *ngxProgress="{replace: true, id: 'timer2', style: {width: '50px' ,height: '50px'
+    }}">
+        Content was loaded successfully
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <button>TBD: top-progress-bar</button>
+    <ngx-progress class="progress" *ngxProgress="{id:'testId'}"></ngx-progress>
+  </div>
+  <div class="container">
+    <div class="header" (click)="startTimer4()">
+      template-ref to progress-bar (Press me)
+    </div>
+    <ng-template #progressRef>
+      <ngx-progress class="progress"></ngx-progress>
+    </ng-template>
+    <div class="test-container"
+         *ngxProgress="{replace: true, id: 'timer4', progressTemplate: progressRef}">
+      Hello
 
-<span class="info" *ngxProgress="{id:'testId', progressTemplate: progress}">dasdasda</span>
-
-
-<span class="info" *ngxProgress="{id:'testId', progressTemplate: progress}">dasdasda</span>
-
-<ng-template #progress><img/></ng-template>
-<!--<ngx-progress [id]="'testId'"><div>asdsad</div></ngx-progress>-->
+    </div>
+  </div>
+  <!--<ngx-progress [id]="'testId'"><div>asdsad</div></ngx-progress>-->

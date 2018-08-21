@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, of, ReplaySubject} from 'rxjs';
 import {filter, switchMap, tap} from 'rxjs/operators';
 import {ProgressStatus} from '../model/progress-status';
-import {finalize} from 'rxjs/internal/operators';
+import {finalize, map, scan} from 'rxjs/internal/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,9 @@ export class ProgressRegistryService {
   }
 
   progressUpdate$(selector: string) {
-    return this.subject$.pipe(filter(s => s.selector === selector));
+    return this.subject$.pipe(filter(s => s.selector === selector),
+      map(s => s.status),
+      scan((acc, cur) => acc + cur, 0));
   }
 
   private onProgressEnd(selector: string) {

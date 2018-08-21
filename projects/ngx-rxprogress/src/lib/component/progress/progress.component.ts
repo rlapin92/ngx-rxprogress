@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, HostBinding} from '@angular/core';
+
 
 @Component({
   selector: 'ngx-progress',
@@ -6,5 +7,7 @@ import {Component} from '@angular/core';
   styleUrls: ['./progress.component.styl']
 })
 export class ProgressComponent {
+  @HostBinding('style.width') width;
+  @HostBinding('style.height') height;
 
 }

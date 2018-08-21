@@ -11,14 +11,25 @@ export class AppComponent {
   title = 'progress-lib';
 
   constructor(private progress: ProgressRegistryService) {
-    this.progress.register('testId', timer(2000)).subscribe(a => {
-      console.log(a);
-    });
+
+  }
+
+  startTimer(){
 
 
-    this.progress.register('testId', timer(5000)).subscribe(a => {
+    this.progress.register('timer1', timer(5000)).subscribe(a => {
       console.log(a);
     });
   }
 
+  startTimer2() {
+    this.progress.register('timer2', timer(5000)).subscribe(a => {
+      console.log(a);
+    });
+  }
+  startTimer4() {
+    this.progress.register('timer4', timer(5000)).subscribe(a => {
+      console.log(a);
+    });
+  }
 }

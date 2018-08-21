@@ -1,4 +1,96 @@
-info {
-  width: 50px;
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: #eee;
+  box-sizing: border-box;
   height: 50px;
+  width: 100%;
+  flex-grow: 0;
+  font-weight: bold;
+  background: linear-gradient(45deg, #333, #000, #333);
+}
+
+.content {
+  padding: 50px;
+  flex-grow: 1;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  background: #fff;
+  grid-gap: 50px;
+
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 1px 1px 10px 0 #000;
+}
+.header {
+  background: #333;
+  color: #fff;
+  padding: 5px;
+  height: 50px;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  display: flex;
+}
+.tools-pane {
+  display: flex;
+  padding: 5px;
+  flex-direction: row;
+  flex: 0 0 auto;
+  width: 50px;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+
+.material-icons {
+  color: #fff;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.material-icons:hover {
+  opacity: 0.8;
+}
+.header:hover {
+  background: #444;
+}
+.row2x1 {
+  flex-grow: 1;
+  flex-basis: auto;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+button {
+  flex-shrink: 0;
+  height: 50px;
+}
+.test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+ngx-progress {
+  display: flex;
 }
