@@ -1,27 +1,64 @@
-# ProgressLib
+# ngx-rxprogress
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.3.
+This angular 2+ library simplifies usage of progressbars in your applications.
 
-## Development server
+It allows to decorate component to be as progress bar and it automatically defines whether it should be displayed or not.
+You can also add an attribute to some component to be replaced with progress bar while fetching some data.
+The progress is showing while until some observable is not complete.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+You can find the library here: https://www.npmjs.com/package/ngx-rxprogress
 
-## Build
+To start working with ngx-rxprogress just install it to your project as dependency.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+# Install 
 
-## Running unit tests
+npm i ngx-rxprogress --save
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# How to use:
 
-## Running end-to-end tests
+## First example (show progress while performing some long operation):
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+In template (your-component is your progress-bar component) or you can use built-in <ngx-progress>:
+```javascript
+<your-component *ngxProgress="{id:'someId'}"> </your-component>
+```
+In your component inject progressRegistryService  
+```javascript
+  constructor(private progress: ProgressRegistryService) {
 
-## Further help
+  }
+``` 
+and then wrap your observable with long time operation with register method of the progress registry service:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```javascript
+this.progress.register('someId', timer(5000)).subscribe(a => {
+      console.log(a);
+    });
+```
+Register method has two arguments. First one is an id that will be used to associate with this process in order that every progress bar can track the current status. Second param is an observable.
+As you can see *ngxProgress directive has value {id: 'someId'} this id will be used to listen to incoming statuses from the registered observable.
+
+## Second example (show progress instead of some component):
+
+The progress registration in component will be the same.
+But in template you should use this syntax: 
+```javascript
+<your-component *ngxProgress="{id:'someId','replace':true', 'style: {width: '50px', height:'50px'}'}"> </your-component>
+```  
+In this case your-component is some component that should display some important information but when this information is fetched we will see progress bar(by default it is ngx-progress, but we can define this component using template-ref:
+```javascript
+
+<ng-template #progressRef>
+      <ngx-progress class="progress"></ngx-progress>
+    </ng-template>
+    <div class="test-container"
+         *ngxProgress="{replace: true, id: 'timer4', progressTemplate: progressRef}">
+      Hello
+    </div>
+```
+
+
+# Demo
+For examples please visit: https://stioneq.github.io/ngx-rxprogress/
