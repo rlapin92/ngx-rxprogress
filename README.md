@@ -18,6 +18,14 @@ npm i ngx-rxprogress --save
 
 # How to use:
 
+First of all, add NgxRxprogressModule into your module:
+```javascript
+import {NgxRxprogressModule} from 'ngx-rxprogress';
+imports: [
+  NgxRxprogressModule
+  ]
+```
+
 ## First example (show progress while performing some long operation):
 
 In template (your-component is your progress-bar component) or you can use built-in <ngx-progress>:
