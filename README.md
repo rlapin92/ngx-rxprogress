@@ -70,3 +70,16 @@ In this case your-component is some component that should display some important
 
 # Demo
 For examples please visit: https://stioneq.github.io/ngx-rxprogress/
+
+# Future plans
+* Introduce support of progress in async pipe.
+As for now i need to get rid of async pipe in order to get progress functionallity by wrapping observable.
+It can be quite inconvenient, especially for the projects where we have a lot of such pipes.
+I would like to add pipe like an async that will do such registration shadowly e.g.
+```javascript
+  <my-comp *ngxProgress="{id: 'test'}">{someObs$ | progress:'test'}</my-comp>
+```
+* The next thing i want to add is the modern way of showing progress: line-progress that will be displayed above the header.
+Perhaps, i will add center progress as well. Currently, you need to style your progress for proper display, but this functionallity can help you to get rid of boilerplate. All styling will be applied by using configuration of the ngx-progress directive.
+
+* Finite progress. It would be perfect if we can specify some progress value and it will be displayed on the progress.
